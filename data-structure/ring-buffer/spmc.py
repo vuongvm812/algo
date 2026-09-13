@@ -75,15 +75,25 @@ class RingBuffer:
         return data
 
     def peek(self) -> Data:
+        self.lock.acquire()
         if self.isEmpty():
+            self.lock.release()
+
             return None
 
-        return self.ring[self.readPtr]
+        data = self.ring[self.readPtr]
+        self.lock.release()
+
+        return data
 
     def empty(self):
+        self.lock.acquire()
+
         self.readPtr = 0
         self.writePtr = 0
         self.ring = [None] * self.size
+
+        self.lock.release()
 
         return
 

@@ -1,2 +1,3 @@
 .DS_Store/
 **/.null-ls*.py
+**/__pycache__
